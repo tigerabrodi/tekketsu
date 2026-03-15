@@ -10,8 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
-import { Route as AuthenticatedWorkoutRouteRouteImport } from './routes/_authenticated/workout/route'
 import { Route as IndexRouteRouteImport } from './routes/index/route'
+import { Route as AuthenticatedWorkoutRouteRouteImport } from './routes/_authenticated/workout/route'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',

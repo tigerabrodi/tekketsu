@@ -1,0 +1,49 @@
+type WorkoutMode = 'timer' | 'sets'
+
+type WorkoutStatus = 'ready' | 'running' | 'paused' | 'break' | 'complete'
+
+type BreakPreset = {
+  label: string
+  durationSeconds: number
+  display: string
+}
+
+type CompletionStatTone = 'accent' | 'default'
+
+type CompletionStat = {
+  label: string
+  value: string
+  tone: CompletionStatTone
+}
+
+type WorkoutState = {
+  mode: WorkoutMode
+  timerDurationSeconds: number
+  targetSets: number
+  currentTimeSeconds: number
+  totalActiveTimeSeconds: number
+  completedSets: number
+  isRunning: boolean
+  breakTimeSeconds: number
+  activeBreakDurationSeconds: number
+  isComplete: boolean
+}
+
+type WorkoutAction =
+  | { type: 'setMode'; mode: WorkoutMode }
+  | { type: 'toggleRunning' }
+  | { type: 'resetWorkout' }
+  | { type: 'tickSecond' }
+  | { type: 'startBreak'; durationSeconds: number }
+  | { type: 'adjustTimerDuration'; deltaSeconds: number }
+  | { type: 'adjustTargetSets'; deltaSets: number }
+
+export type {
+  BreakPreset,
+  CompletionStat,
+  CompletionStatTone,
+  WorkoutAction,
+  WorkoutMode,
+  WorkoutState,
+  WorkoutStatus,
+}
