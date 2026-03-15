@@ -10,11 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthenticatedWorkoutRouteRouteImport } from './routes/_authenticated/workout/route'
 import { Route as IndexRouteRouteImport } from './routes/index/route'
-import { Route as AuthenticatedDashboardRouteRouteImport } from './routes/_authenticated/dashboard/route'
-import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/_admin/route'
-import { Route as AuthenticatedAdminAdminUsersRouteRouteImport } from './routes/_authenticated/_admin/admin/users/route'
-import { Route as AuthenticatedAdminAdminComponentsRouteRouteImport } from './routes/_authenticated/_admin/admin/components/route'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
@@ -25,63 +22,33 @@ const IndexRouteRoute = IndexRouteRouteImport.update({
   path: '',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedDashboardRouteRoute =
-  AuthenticatedDashboardRouteRouteImport.update({
-    id: '/dashboard',
-    path: '/dashboard',
+const AuthenticatedWorkoutRouteRoute =
+  AuthenticatedWorkoutRouteRouteImport.update({
+    id: '/workout',
+    path: '/workout',
     getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
-  id: '/_admin',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedAdminAdminUsersRouteRoute =
-  AuthenticatedAdminAdminUsersRouteRouteImport.update({
-    id: '/admin/users',
-    path: '/admin/users',
-    getParentRoute: () => AuthenticatedAdminRouteRoute,
-  } as any)
-const AuthenticatedAdminAdminComponentsRouteRoute =
-  AuthenticatedAdminAdminComponentsRouteRouteImport.update({
-    id: '/admin/components',
-    path: '/admin/components',
-    getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof AuthenticatedAdminRouteRouteWithChildren
-  '/dashboard': typeof AuthenticatedDashboardRouteRoute
-  '/admin/components': typeof AuthenticatedAdminAdminComponentsRouteRoute
-  '/admin/users': typeof AuthenticatedAdminAdminUsersRouteRoute
+  '/': typeof AuthenticatedRouteRouteWithChildren
+  '/workout': typeof AuthenticatedWorkoutRouteRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof AuthenticatedAdminRouteRouteWithChildren
-  '/dashboard': typeof AuthenticatedDashboardRouteRoute
-  '/admin/components': typeof AuthenticatedAdminAdminComponentsRouteRoute
-  '/admin/users': typeof AuthenticatedAdminAdminUsersRouteRoute
+  '/': typeof AuthenticatedRouteRouteWithChildren
+  '/workout': typeof AuthenticatedWorkoutRouteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRouteRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/_authenticated/_admin': typeof AuthenticatedAdminRouteRouteWithChildren
-  '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteRoute
-  '/_authenticated/_admin/admin/components': typeof AuthenticatedAdminAdminComponentsRouteRoute
-  '/_authenticated/_admin/admin/users': typeof AuthenticatedAdminAdminUsersRouteRoute
+  '/_authenticated/workout': typeof AuthenticatedWorkoutRouteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/admin/components' | '/admin/users'
+  fullPaths: '/' | '/workout'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/admin/components' | '/admin/users'
-  id:
-    | '__root__'
-    | '/'
-    | '/_authenticated'
-    | '/_authenticated/_admin'
-    | '/_authenticated/dashboard'
-    | '/_authenticated/_admin/admin/components'
-    | '/_authenticated/_admin/admin/users'
+  to: '/' | '/workout'
+  id: '__root__' | '/' | '/_authenticated' | '/_authenticated/workout'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -105,63 +72,22 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteRouteImport
+    '/_authenticated/workout': {
+      id: '/_authenticated/workout'
+      path: '/workout'
+      fullPath: '/workout'
+      preLoaderRoute: typeof AuthenticatedWorkoutRouteRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/_admin': {
-      id: '/_authenticated/_admin'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedAdminRouteRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/_admin/admin/users': {
-      id: '/_authenticated/_admin/admin/users'
-      path: '/admin/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AuthenticatedAdminAdminUsersRouteRouteImport
-      parentRoute: typeof AuthenticatedAdminRouteRoute
-    }
-    '/_authenticated/_admin/admin/components': {
-      id: '/_authenticated/_admin/admin/components'
-      path: '/admin/components'
-      fullPath: '/admin/components'
-      preLoaderRoute: typeof AuthenticatedAdminAdminComponentsRouteRouteImport
-      parentRoute: typeof AuthenticatedAdminRouteRoute
     }
   }
 }
-
-interface AuthenticatedAdminRouteRouteChildren {
-  AuthenticatedAdminAdminComponentsRouteRoute: typeof AuthenticatedAdminAdminComponentsRouteRoute
-  AuthenticatedAdminAdminUsersRouteRoute: typeof AuthenticatedAdminAdminUsersRouteRoute
-}
-
-const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
-  {
-    AuthenticatedAdminAdminComponentsRouteRoute:
-      AuthenticatedAdminAdminComponentsRouteRoute,
-    AuthenticatedAdminAdminUsersRouteRoute:
-      AuthenticatedAdminAdminUsersRouteRoute,
-  }
-
-const AuthenticatedAdminRouteRouteWithChildren =
-  AuthenticatedAdminRouteRoute._addFileChildren(
-    AuthenticatedAdminRouteRouteChildren,
-  )
 
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
-  AuthenticatedDashboardRouteRoute: typeof AuthenticatedDashboardRouteRoute
+  AuthenticatedWorkoutRouteRoute: typeof AuthenticatedWorkoutRouteRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
-  AuthenticatedDashboardRouteRoute: AuthenticatedDashboardRouteRoute,
+  AuthenticatedWorkoutRouteRoute: AuthenticatedWorkoutRouteRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

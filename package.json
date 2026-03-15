@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@auth/core": "0.37.0",
-    "@convex-dev/auth": "0.0.91",
+    "@convex-dev/auth": "^0.0.91",
     "@fontsource-variable/oswald": "^5.2.5",
     "@fontsource/ibm-plex-mono": "^5.2.5",
     "@fontsource/shippori-mincho": "^5.2.5",

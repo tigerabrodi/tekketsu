@@ -6,9 +6,10 @@
       "name": "egaku",
       "dependencies": {
         "@auth/core": "0.37.0",
-        "@convex-dev/auth": "0.0.91",
-        "@fontsource-variable/dm-sans": "^5.2.8",
-        "@fontsource-variable/fraunces": "^5.2.9",
+        "@convex-dev/auth": "^0.0.91",
+        "@fontsource-variable/oswald": "^5.2.5",
+        "@fontsource/ibm-plex-mono": "^5.2.5",
+        "@fontsource/shippori-mincho": "^5.2.5",
         "@tailwindcss/vite": "^4.2.1",
         "@tanstack/react-router": "^1.163.3",
         "clsx": "^2.1.1",
@@ -158,9 +159,11 @@
 
     "@eslint/plugin-kit": ["@eslint/plugin-kit@0.4.1", "", { "dependencies": { "@eslint/core": "^0.17.0", "levn": "^0.4.1" } }, "sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA=="],
 
-    "@fontsource-variable/dm-sans": ["@fontsource-variable/dm-sans@5.2.8", "", {}, "sha512-AxkvMTvNWgfrmlyjiV05vlHYJa+nRQCf1EfvIrQAPBpFJW0O9VTz7oAFr9S3lvbWdmnFoBk7yFqQL86u64nl2g=="],
+    "@fontsource-variable/oswald": ["@fontsource-variable/oswald@5.2.8", "", {}, "sha512-sIXwfKbyHOATgBWOlpR73VMQ8pA8XCToiyy6sL02ZfYEZPpW18TLtpxPBpYXId7xKbWCousOTzlJsa/9rTd8WQ=="],
 
-    "@fontsource-variable/fraunces": ["@fontsource-variable/fraunces@5.2.9", "", {}, "sha512-Y6IjunlN9Ni723np+GIgAaKzCDBrPRrqNi01TZxHs5wtHYROWFM9W6yiT+/gGwSjWIRD18oX17kD/BRWekc/Lw=="],
+    "@fontsource/ibm-plex-mono": ["@fontsource/ibm-plex-mono@5.2.7", "", {}, "sha512-MKAb8qV+CaiMQn2B0dIi1OV3565NYzp3WN5b4oT6LTkk+F0jR6j0ZN+5BKJiIhffDC3rtBULsYZE65+0018z9w=="],
+
+    "@fontsource/shippori-mincho": ["@fontsource/shippori-mincho@5.2.8", "", {}, "sha512-GoWDgrzVyB1oUufPKN9suBaM+TpliiBcMwEalqqMeO38xdGJzY/ZwhehZsxyOoR56c1l98vwXbj+tXWHyGefJA=="],
 
     "@humanfs/core": ["@humanfs/core@0.19.1", "", {}, "sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA=="],
 
