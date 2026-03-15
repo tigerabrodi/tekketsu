@@ -38,12 +38,36 @@ type WorkoutAction =
   | { type: 'adjustTimerDuration'; deltaSeconds: number }
   | { type: 'adjustTargetSets'; deltaSets: number }
 
+type WorkoutScreenModel = {
+  state: WorkoutState
+  status: WorkoutStatus
+  mainDisplay: string
+  secondaryValue: string
+  secondaryLabel: string
+  adjusterValue: string
+  adjusterUnitLabel: string
+  isTimerMode: boolean
+  isTimerTabActive: boolean
+  isSetsTabActive: boolean
+  breakPresets: Array<BreakPreset>
+}
+
+type WorkoutScreenActions = {
+  onSelectTimerMode: () => void
+  onSelectSetsMode: () => void
+  onDecreaseConfig: () => void
+  onIncreaseConfig: () => void
+  onSignOut: () => void
+}
+
 export type {
   BreakPreset,
   CompletionStat,
   CompletionStatTone,
   WorkoutAction,
   WorkoutMode,
+  WorkoutScreenActions,
+  WorkoutScreenModel,
   WorkoutState,
   WorkoutStatus,
 }
