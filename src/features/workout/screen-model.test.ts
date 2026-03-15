@@ -42,6 +42,73 @@ describe('createWorkoutScreenModel', () => {
       isSetsTabActive: true,
     })
   })
+
+  it('maps a running timer workout into an interactive state', () => {
+    expect(
+      createWorkoutScreenModel(
+        createInitialWorkoutState({
+          isRunning: true,
+          currentTimeSeconds: 17 * 60 + 23,
+          completedSets: 3,
+        })
+      )
+    ).toMatchObject({
+      status: 'running',
+      statusLabel: 'RUNNING',
+      mainDisplay: '17:23',
+      secondaryValue: '3',
+      isConfigDisabled: true,
+      isPrimaryControlDisabled: false,
+      primaryControlIcon: 'pause',
+      isBreakActive: false,
+      showBreakPresets: true,
+    })
+  })
+
+  it('maps a paused sets workout into a locked state', () => {
+    expect(
+      createWorkoutScreenModel(
+        createInitialWorkoutState({
+          mode: 'sets',
+          currentTimeSeconds: 42,
+          totalActiveTimeSeconds: 42,
+        })
+      )
+    ).toMatchObject({
+      status: 'paused',
+      statusLabel: 'PAUSED',
+      secondaryValue: '00:42',
+      isConfigDisabled: true,
+      isPrimaryControlDisabled: false,
+      primaryControlIcon: 'play',
+      areBreakPresetsDisabled: true,
+      showBreakPresets: true,
+    })
+  })
+
+  it('maps a break-active workout into the break panel state', () => {
+    expect(
+      createWorkoutScreenModel(
+        createInitialWorkoutState({
+          isRunning: true,
+          currentTimeSeconds: 17 * 60 + 23,
+          completedSets: 3,
+          breakTimeSeconds: 32,
+          activeBreakDurationSeconds: 45,
+        })
+      )
+    ).toMatchObject({
+      status: 'break',
+      statusLabel: 'RUNNING',
+      isConfigDisabled: true,
+      isPrimaryControlDisabled: true,
+      primaryControlIcon: 'play',
+      isBreakActive: true,
+      showBreakPresets: false,
+      breakCountdownDisplay: '0:32',
+      breakSummaryLabel: 'MEDIUM - 0:45',
+    })
+  })
 })
 
 describe('withConfigActions', () => {
@@ -52,6 +119,9 @@ describe('withConfigActions', () => {
       onChangeMode: vi.fn(),
       onAdjustTimerDuration,
       onAdjustTargetSets,
+      onToggleRunning: vi.fn(),
+      onReset: vi.fn(),
+      onStartBreak: vi.fn(),
       onSignOut: vi.fn(),
     })
 
@@ -79,6 +149,9 @@ describe('withConfigActions', () => {
       onChangeMode: vi.fn(),
       onAdjustTimerDuration,
       onAdjustTargetSets,
+      onToggleRunning: vi.fn(),
+      onReset: vi.fn(),
+      onStartBreak: vi.fn(),
       onSignOut: vi.fn(),
     })
 

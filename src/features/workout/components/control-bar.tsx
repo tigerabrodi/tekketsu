@@ -12,6 +12,21 @@ function PlayIcon() {
   )
 }
 
+function PauseIcon() {
+  return (
+    <svg
+      width="22"
+      height="22"
+      viewBox="0 0 22 22"
+      fill="none"
+      aria-hidden="true"
+    >
+      <rect x="6" y="4.5" width="3.5" height="13" fill="#FAFAFA" />
+      <rect x="12.5" y="4.5" width="3.5" height="13" fill="#FAFAFA" />
+    </svg>
+  )
+}
+
 function ResetIcon() {
   return (
     <svg
@@ -38,21 +53,32 @@ function ResetIcon() {
   )
 }
 
-function ControlBar() {
+function ControlBar({
+  isPrimaryControlDisabled,
+  onReset,
+  onToggleRunning,
+  primaryControlIcon,
+}: {
+  isPrimaryControlDisabled: boolean
+  onReset: () => void
+  onToggleRunning: () => void
+  primaryControlIcon: 'play' | 'pause'
+}) {
   return (
     <div className="flex items-center justify-center gap-4 px-6 py-5">
       <button
         type="button"
-        disabled
+        disabled={isPrimaryControlDisabled}
+        onClick={onToggleRunning}
         className="bg-text-primary flex h-14 w-14 items-center justify-center rounded-full disabled:cursor-default disabled:opacity-100"
       >
-        <PlayIcon />
+        {primaryControlIcon === 'pause' ? <PauseIcon /> : <PlayIcon />}
       </button>
 
       <button
         type="button"
-        disabled
-        className="flex h-10 w-10 items-center justify-center rounded-full border border-[rgba(17,17,17,0.15)] disabled:cursor-default disabled:opacity-100"
+        onClick={onReset}
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-[rgba(17,17,17,0.15)]"
       >
         <ResetIcon />
       </button>

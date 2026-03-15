@@ -41,6 +41,7 @@ type WorkoutAction =
 type WorkoutScreenModel = {
   state: WorkoutState
   status: WorkoutStatus
+  statusLabel: string
   mainDisplay: string
   secondaryValue: string
   secondaryLabel: string
@@ -49,6 +50,14 @@ type WorkoutScreenModel = {
   isTimerMode: boolean
   isTimerTabActive: boolean
   isSetsTabActive: boolean
+  isConfigDisabled: boolean
+  isPrimaryControlDisabled: boolean
+  primaryControlIcon: 'play' | 'pause'
+  isBreakActive: boolean
+  showBreakPresets: boolean
+  areBreakPresetsDisabled: boolean
+  breakCountdownDisplay: string | null
+  breakSummaryLabel: string | null
   breakPresets: Array<BreakPreset>
 }
 
@@ -57,6 +66,9 @@ type WorkoutScreenActions = {
   onSelectSetsMode: () => void
   onDecreaseConfig: () => void
   onIncreaseConfig: () => void
+  onToggleRunning: () => void
+  onReset: () => void
+  onStartBreak: (durationSeconds: number) => void
   onSignOut: () => void
 }
 

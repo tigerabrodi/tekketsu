@@ -3,8 +3,8 @@ import {
   TARGET_SET_STEP,
   TIMER_DURATION_STEP_SECONDS,
 } from './constants'
-import { formatSeconds } from './formatters'
-import { getMainDisplay, getWorkoutStatus } from './selectors'
+import { formatBreakSeconds, formatSeconds } from './formatters'
+import { getMainDisplay, getWorkoutStatus, isConfigLocked } from './selectors'
 import type {
   WorkoutMode,
   WorkoutScreenActions,
@@ -15,10 +15,18 @@ import type {
 function createWorkoutScreenModel(state: WorkoutState): WorkoutScreenModel {
   const isTimerMode = state.mode === 'timer'
   const status = getWorkoutStatus(state)
+  const activeBreakPreset =
+    BREAK_PRESETS.find(
+      (breakPreset) =>
+        breakPreset.durationSeconds === state.activeBreakDurationSeconds
+    ) ?? null
+  const isBreakActive = state.breakTimeSeconds > 0
+  const isComplete = status === 'complete'
 
   return {
     state,
     status,
+    statusLabel: status === 'break' ? 'RUNNING' : status.toUpperCase(),
     mainDisplay: getMainDisplay(state),
     secondaryValue: isTimerMode
       ? state.completedSets.toString()
@@ -31,6 +39,19 @@ function createWorkoutScreenModel(state: WorkoutState): WorkoutScreenModel {
     isTimerMode,
     isTimerTabActive: state.mode === 'timer',
     isSetsTabActive: state.mode === 'sets',
+    isConfigDisabled: isConfigLocked(state),
+    isPrimaryControlDisabled: isBreakActive || isComplete,
+    primaryControlIcon: state.isRunning && !isBreakActive ? 'pause' : 'play',
+    isBreakActive,
+    showBreakPresets: !isBreakActive,
+    areBreakPresetsDisabled: !state.isRunning || isBreakActive || isComplete,
+    breakCountdownDisplay: isBreakActive
+      ? formatBreakSeconds(state.breakTimeSeconds)
+      : null,
+    breakSummaryLabel:
+      isBreakActive && activeBreakPreset
+        ? `${activeBreakPreset.label} - ${activeBreakPreset.display}`
+        : null,
     breakPresets: BREAK_PRESETS,
   }
 }
@@ -38,14 +59,26 @@ function createWorkoutScreenModel(state: WorkoutState): WorkoutScreenModel {
 function createWorkoutScreenActions<
   T extends {
     onChangeMode: (mode: WorkoutMode) => void
+    onToggleRunning: () => void
+    onReset: () => void
+    onStartBreak: (durationSeconds: number) => void
     onSignOut: () => void
   },
->({ onChangeMode, onSignOut }: T): WorkoutScreenActions {
+>({
+  onChangeMode,
+  onToggleRunning,
+  onReset,
+  onStartBreak,
+  onSignOut,
+}: T): WorkoutScreenActions {
   return {
     onSelectTimerMode: () => onChangeMode('timer'),
     onSelectSetsMode: () => onChangeMode('sets'),
     onDecreaseConfig: () => undefined,
     onIncreaseConfig: () => undefined,
+    onToggleRunning,
+    onReset,
+    onStartBreak,
     onSignOut,
   }
 }

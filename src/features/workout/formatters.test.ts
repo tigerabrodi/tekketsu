@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formatSeconds } from './formatters'
+import { formatBreakSeconds, formatSeconds } from './formatters'
 
 describe('formatSeconds', () => {
   it('formats zero-padded minutes and seconds', () => {
@@ -14,5 +14,16 @@ describe('formatSeconds', () => {
 
   it('floors fractional seconds before formatting', () => {
     expect(formatSeconds(61.9)).toBe('01:01')
+  })
+})
+
+describe('formatBreakSeconds', () => {
+  it('formats break countdowns without a leading minute zero', () => {
+    expect(formatBreakSeconds(32)).toBe('0:32')
+    expect(formatBreakSeconds(90)).toBe('1:30')
+  })
+
+  it('clamps negative values to zero', () => {
+    expect(formatBreakSeconds(-2)).toBe('0:00')
   })
 })

@@ -1,20 +1,30 @@
+import { cn } from '@/utils/cn'
+
 function ConfigAdjuster({
+  disabled,
   value,
   unitLabel,
   onDecrease,
   onIncrease,
 }: {
+  disabled: boolean
   value: string
   unitLabel: string
   onDecrease: () => void
   onIncrease: () => void
 }) {
   return (
-    <div className="flex items-center justify-center gap-5 px-6 py-2">
+    <div
+      className={cn(
+        'flex items-center justify-center gap-5 px-6 py-2',
+        disabled && 'opacity-30'
+      )}
+    >
       <button
         type="button"
+        disabled={disabled}
         onClick={onDecrease}
-        className="flex h-8 w-8 items-center justify-center border border-[rgba(17,17,17,0.12)] font-mono text-[20px] leading-[20px] text-[rgba(17,17,17,0.35)]"
+        className="flex h-8 w-8 items-center justify-center border border-[rgba(17,17,17,0.12)] font-mono text-[20px] leading-[20px] text-[rgba(17,17,17,0.35)] disabled:cursor-default"
       >
         -
       </button>
@@ -30,8 +40,9 @@ function ConfigAdjuster({
 
       <button
         type="button"
+        disabled={disabled}
         onClick={onIncrease}
-        className="flex h-8 w-8 items-center justify-center border border-[rgba(17,17,17,0.12)] font-mono text-[20px] leading-[20px] text-[rgba(17,17,17,0.35)]"
+        className="flex h-8 w-8 items-center justify-center border border-[rgba(17,17,17,0.12)] font-mono text-[20px] leading-[20px] text-[rgba(17,17,17,0.35)] disabled:cursor-default"
       >
         +
       </button>

@@ -1,4 +1,5 @@
 import type { WorkoutScreenActions, WorkoutScreenModel } from '../types'
+import { BreakActivePanel } from './break-active-panel'
 import { BreakPresets } from './break-presets'
 import { ConfigAdjuster } from './config-adjuster'
 import { ControlBar } from './control-bar'
@@ -18,6 +19,7 @@ function WorkoutScreen({
       <WorkoutTopBar onSignOut={actions.onSignOut} />
 
       <ModeToggle
+        disabled={model.isConfigDisabled}
         isTimerTabActive={model.isTimerTabActive}
         isSetsTabActive={model.isSetsTabActive}
         onSelectTimerMode={actions.onSelectTimerMode}
@@ -25,6 +27,7 @@ function WorkoutScreen({
       />
 
       <ConfigAdjuster
+        disabled={model.isConfigDisabled}
         value={model.adjusterValue}
         unitLabel={model.adjusterUnitLabel}
         onDecrease={actions.onDecreaseConfig}
@@ -34,18 +37,36 @@ function WorkoutScreen({
       <MainDisplay
         isTimerMode={model.isTimerMode}
         mainDisplay={model.mainDisplay}
-        statusLabel={model.status.toUpperCase()}
+        statusLabel={model.statusLabel}
         secondaryValue={model.secondaryValue}
         secondaryLabel={model.secondaryLabel}
       />
 
-      <ControlBar />
+      <ControlBar
+        isPrimaryControlDisabled={model.isPrimaryControlDisabled}
+        onReset={actions.onReset}
+        onToggleRunning={actions.onToggleRunning}
+        primaryControlIcon={model.primaryControlIcon}
+      />
 
       <div className="flex justify-center px-6 py-2">
         <div className="bg-border h-px w-full max-w-[342px]" />
       </div>
 
-      <BreakPresets breakPresets={model.breakPresets} />
+      {model.isBreakActive &&
+      model.breakCountdownDisplay &&
+      model.breakSummaryLabel ? (
+        <BreakActivePanel
+          countdownDisplay={model.breakCountdownDisplay}
+          summaryLabel={model.breakSummaryLabel}
+        />
+      ) : (
+        <BreakPresets
+          areBreakPresetsDisabled={model.areBreakPresetsDisabled}
+          breakPresets={model.breakPresets}
+          onStartBreak={actions.onStartBreak}
+        />
+      )}
     </main>
   )
 }

@@ -1,6 +1,14 @@
 import type { BreakPreset } from '../types'
 
-function BreakPresets({ breakPresets }: { breakPresets: Array<BreakPreset> }) {
+function BreakPresets({
+  areBreakPresetsDisabled,
+  breakPresets,
+  onStartBreak,
+}: {
+  areBreakPresetsDisabled: boolean
+  breakPresets: Array<BreakPreset>
+  onStartBreak: (durationSeconds: number) => void
+}) {
   return (
     <>
       <div className="flex justify-center px-6 pt-2 pb-1">
@@ -14,7 +22,8 @@ function BreakPresets({ breakPresets }: { breakPresets: Array<BreakPreset> }) {
           <button
             key={breakPreset.label}
             type="button"
-            disabled
+            disabled={areBreakPresetsDisabled}
+            onClick={() => onStartBreak(breakPreset.durationSeconds)}
             className="flex h-[52px] min-w-0 flex-1 flex-col items-center justify-center gap-0.5 border border-[rgba(17,17,17,0.1)] disabled:cursor-default disabled:opacity-100"
           >
             <span className="font-body text-text-primary text-[16px] leading-[18px]">
