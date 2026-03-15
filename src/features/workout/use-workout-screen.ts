@@ -1,5 +1,8 @@
 import { useAuthActions } from '@convex-dev/auth/react'
-import { useEffect, useReducer } from 'react'
+import { clearCachedUser } from '@/lib/current-user-session'
+import { notificationManager } from '@/managers/notification'
+import { soundEffectManager } from '@/managers/sound-effect'
+import { useEffect, useReducer, useRef } from 'react'
 import { createInitialWorkoutState, workoutReducer } from './reducer'
 import {
   createWorkoutScreenActions,
@@ -7,6 +10,7 @@ import {
   withConfigActions,
 } from './screen-model'
 import { isConfigLocked } from './selectors'
+import { didBreakFinishNaturally } from './transitions'
 import type { WorkoutMode } from './types'
 
 function useWorkoutScreen() {
@@ -16,6 +20,7 @@ function useWorkoutScreen() {
     createInitialWorkoutState
   )
   const { signOut } = useAuthActions()
+  const previousStateRef = useRef(state)
 
   const handleChangeMode = (mode: WorkoutMode) => {
     if (state.mode === mode || isConfigLocked(state)) {
@@ -60,6 +65,17 @@ function useWorkoutScreen() {
     return () => window.clearInterval(intervalId)
   }, [shouldTick])
 
+  useEffect(() => {
+    const previousState = previousStateRef.current
+
+    if (didBreakFinishNaturally(previousState, state)) {
+      void soundEffectManager.playBreakFinished()
+      void notificationManager.notifyBreakFinished()
+    }
+
+    previousStateRef.current = state
+  }, [state])
+
   const model = createWorkoutScreenModel(state)
   const actions = withConfigActions(
     state,
@@ -69,6 +85,7 @@ function useWorkoutScreen() {
       onReset: handleReset,
       onStartBreak: handleStartBreak,
       onSignOut: () => {
+        clearCachedUser()
         void signOut()
       },
     }),

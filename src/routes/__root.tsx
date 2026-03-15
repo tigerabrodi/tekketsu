@@ -1,30 +1,39 @@
+import { PwaUpdatePrompt } from '@/components/pwa-update-prompt'
 import { LoadingScreen } from '@/components/loading-screen'
-import { api } from '@convex/_generated/api'
+import { shouldRedirectAuthenticatedHome } from '@/lib/current-user-session'
+import { useEffectiveCurrentUser } from '@/lib/use-effective-current-user'
 import {
   createRootRoute,
   Navigate,
   Outlet,
   useLocation,
 } from '@tanstack/react-router'
-import { useConvexAuth, useQuery } from 'convex/react'
 
 export const Route = createRootRoute({
   component: RootLayout,
 })
 
 function RootLayout() {
-  const { isLoading: isAuthLoading } = useConvexAuth()
-  const currentUser = useQuery(api.users.queries.getCurrentUser)
+  const { effectiveUser, shouldShowLoading } = useEffectiveCurrentUser()
   const pathname = useLocation({ select: (location) => location.pathname })
 
-  if (isAuthLoading || currentUser === undefined) {
+  if (shouldShowLoading) {
     return <LoadingScreen />
   }
 
-  // Redirect authenticated users to the workout screen
-  if (currentUser && pathname === '/') {
+  if (
+    shouldRedirectAuthenticatedHome({
+      pathname,
+      effectiveUser,
+    })
+  ) {
     return <Navigate to="/workout" />
   }
 
-  return <Outlet />
+  return (
+    <>
+      <Outlet />
+      <PwaUpdatePrompt />
+    </>
+  )
 }

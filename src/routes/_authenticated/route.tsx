@@ -1,25 +1,31 @@
+import { AuthenticatedAppRuntime } from '@/components/authenticated-app-runtime'
 import { CurrentUserProvider } from '@/lib/current-user-provider'
-import { api } from '@convex/_generated/api'
+import { useEffectiveCurrentUser } from '@/lib/use-effective-current-user'
 import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router'
-import { useQuery } from 'convex/react'
 
 export const Route = createFileRoute('/_authenticated')({
   component: AuthenticatedRoute,
 })
 
 function AuthenticatedRoute() {
-  const currentUser = useQuery(api.users.queries.getCurrentUser)
+  const { currentUser, effectiveUser } = useEffectiveCurrentUser()
+  const resolvedUser = effectiveUser ?? currentUser
 
-  if (currentUser === undefined) {
+  if (currentUser === undefined && effectiveUser === null) {
     return null
   }
 
-  if (currentUser === null) {
+  if (currentUser === null && effectiveUser === null) {
     return <Navigate to="/" />
   }
 
+  if (!resolvedUser) {
+    return null
+  }
+
   return (
-    <CurrentUserProvider user={currentUser}>
+    <CurrentUserProvider user={resolvedUser}>
+      <AuthenticatedAppRuntime />
       <Outlet />
     </CurrentUserProvider>
   )

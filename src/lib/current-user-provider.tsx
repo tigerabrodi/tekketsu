@@ -1,12 +1,12 @@
-import type { Doc } from '@convex/_generated/dataModel'
 import type { ReactNode } from 'react'
+import type { CurrentUserLike } from './current-user-session'
 import { CurrentUserContext } from './current-user-context'
 
 function CurrentUserProvider({
   user,
   children,
 }: {
-  user: Doc<'users'>
+  user: CurrentUserLike
   children: ReactNode
 }) {
   return (

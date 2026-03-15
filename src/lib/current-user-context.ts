@@ -1,7 +1,7 @@
-import type { Doc } from '@convex/_generated/dataModel'
 import { createContext, useContext } from 'react'
+import type { CurrentUserLike } from './current-user-session'
 
-const CurrentUserContext = createContext<Doc<'users'> | null>(null)
+const CurrentUserContext = createContext<CurrentUserLike | null>(null)
 
 function useCurrentUser() {
   const currentUser = useContext(CurrentUserContext)

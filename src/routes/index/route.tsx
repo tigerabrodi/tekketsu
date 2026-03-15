@@ -7,7 +7,13 @@ export const Route = createFileRoute('/')({
 
 function GoogleIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
       <path
         d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
         fill="#fafafa"
@@ -34,7 +40,7 @@ function LandingPage() {
   return (
     <div className="bg-bg flex min-h-screen flex-col items-center px-7 pt-14">
       {/* Header label */}
-      <p className="font-mono text-text-muted text-caption tracking-[0.25em] font-medium">
+      <p className="text-text-muted text-caption font-mono font-medium tracking-[0.25em]">
         WORKOUT TRACKER
       </p>
 
@@ -45,7 +51,7 @@ function LandingPage() {
         </h1>
         <div className="flex items-center gap-4">
           <div className="bg-text-primary h-px w-10" />
-          <p className="font-mono text-text-primary text-[13px] leading-[18px] tracking-[0.35em]">
+          <p className="text-text-primary font-mono text-[13px] leading-[18px] tracking-[0.35em]">
             TEKKETSU
           </p>
           <div className="bg-text-primary h-px w-10" />
@@ -57,7 +63,7 @@ function LandingPage() {
         <img
           src="/assets/guts-image-optimized.webp"
           alt="Warrior kneeling with sword"
-          className="w-[285px] h-[285px] object-cover"
+          className="border-text-primary h-[285px] w-[285px] border-2 object-cover"
         />
       </div>
 
@@ -74,12 +80,12 @@ function LandingPage() {
       <div className="mt-6 flex w-full max-w-[310px] flex-col items-center gap-2.5">
         <button
           onClick={() => signIn('google', { redirectTo: '/workout' })}
-          className="bg-text-primary text-text-on-dark font-mono flex w-full cursor-pointer items-center justify-center gap-2.5 py-4 text-[13px] leading-[18px] font-medium tracking-wide transition-opacity hover:opacity-90"
+          className="bg-text-primary text-text-on-dark flex w-full cursor-pointer items-center justify-center gap-2.5 py-4 font-mono text-[13px] leading-[18px] font-medium tracking-wide transition-opacity hover:opacity-90"
         >
           <GoogleIcon />
           Sign in with Google
         </button>
-        <p className="font-mono text-text-muted text-caption tracking-wide">
+        <p className="text-text-muted text-caption font-mono tracking-wide">
           Free forever. Let's lock in.
         </p>
       </div>
