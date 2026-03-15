@@ -18,7 +18,7 @@ function PwaUpdatePrompt() {
           <p className="font-mono text-[11px] leading-[16px] tracking-[0.24em]">
             UPDATE READY
           </p>
-          <p className="font-body mt-1 text-[14px] leading-[18px] font-light">
+          <p className="font-body mt-1 text-[14px] leading-[18px] font-normal">
             Reload when you are between sets.
           </p>
         </div>
