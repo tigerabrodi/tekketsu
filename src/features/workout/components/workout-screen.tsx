@@ -1,3 +1,4 @@
+import { CompletionCard } from './completion-card'
 import type { WorkoutScreenActions, WorkoutScreenModel } from '../types'
 import { BreakActivePanel } from './break-active-panel'
 import { BreakPresets } from './break-presets'
@@ -26,46 +27,55 @@ function WorkoutScreen({
         onSelectSetsMode={actions.onSelectSetsMode}
       />
 
-      <ConfigAdjuster
-        disabled={model.isConfigDisabled}
-        value={model.adjusterValue}
-        unitLabel={model.adjusterUnitLabel}
-        onDecrease={actions.onDecreaseConfig}
-        onIncrease={actions.onIncreaseConfig}
-      />
-
-      <MainDisplay
-        isTimerMode={model.isTimerMode}
-        mainDisplay={model.mainDisplay}
-        statusLabel={model.statusLabel}
-        secondaryValue={model.secondaryValue}
-        secondaryLabel={model.secondaryLabel}
-      />
-
-      <ControlBar
-        isPrimaryControlDisabled={model.isPrimaryControlDisabled}
-        onReset={actions.onReset}
-        onToggleRunning={actions.onToggleRunning}
-        primaryControlIcon={model.primaryControlIcon}
-      />
-
-      <div className="flex justify-center px-6 py-2">
-        <div className="bg-border h-px w-full max-w-[342px]" />
-      </div>
-
-      {model.isBreakActive &&
-      model.breakCountdownDisplay &&
-      model.breakSummaryLabel ? (
-        <BreakActivePanel
-          countdownDisplay={model.breakCountdownDisplay}
-          summaryLabel={model.breakSummaryLabel}
+      {model.isCompletionVisible ? (
+        <CompletionCard
+          completionStats={model.completionStats}
+          onReset={actions.onReset}
         />
       ) : (
-        <BreakPresets
-          areBreakPresetsDisabled={model.areBreakPresetsDisabled}
-          breakPresets={model.breakPresets}
-          onStartBreak={actions.onStartBreak}
-        />
+        <>
+          <ConfigAdjuster
+            disabled={model.isConfigDisabled}
+            value={model.adjusterValue}
+            unitLabel={model.adjusterUnitLabel}
+            onDecrease={actions.onDecreaseConfig}
+            onIncrease={actions.onIncreaseConfig}
+          />
+
+          <MainDisplay
+            isTimerMode={model.isTimerMode}
+            mainDisplay={model.mainDisplay}
+            statusLabel={model.statusLabel}
+            secondaryValue={model.secondaryValue}
+            secondaryLabel={model.secondaryLabel}
+          />
+
+          <ControlBar
+            isPrimaryControlDisabled={model.isPrimaryControlDisabled}
+            onReset={actions.onReset}
+            onToggleRunning={actions.onToggleRunning}
+            primaryControlIcon={model.primaryControlIcon}
+          />
+
+          <div className="flex justify-center px-6 py-2">
+            <div className="bg-border h-px w-full max-w-[342px]" />
+          </div>
+
+          {model.isBreakActive &&
+          model.breakCountdownDisplay &&
+          model.breakSummaryLabel ? (
+            <BreakActivePanel
+              countdownDisplay={model.breakCountdownDisplay}
+              summaryLabel={model.breakSummaryLabel}
+            />
+          ) : (
+            <BreakPresets
+              areBreakPresetsDisabled={model.areBreakPresetsDisabled}
+              breakPresets={model.breakPresets}
+              onStartBreak={actions.onStartBreak}
+            />
+          )}
+        </>
       )}
     </main>
   )

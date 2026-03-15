@@ -4,7 +4,12 @@ import {
   TIMER_DURATION_STEP_SECONDS,
 } from './constants'
 import { formatBreakSeconds, formatSeconds } from './formatters'
-import { getMainDisplay, getWorkoutStatus, isConfigLocked } from './selectors'
+import {
+  getCompletionStats,
+  getMainDisplay,
+  getWorkoutStatus,
+  isConfigLocked,
+} from './selectors'
 import type {
   WorkoutMode,
   WorkoutScreenActions,
@@ -27,6 +32,7 @@ function createWorkoutScreenModel(state: WorkoutState): WorkoutScreenModel {
     state,
     status,
     statusLabel: status === 'break' ? 'RUNNING' : status.toUpperCase(),
+    isCompletionVisible: isComplete,
     mainDisplay: getMainDisplay(state),
     secondaryValue: isTimerMode
       ? state.completedSets.toString()
@@ -53,6 +59,7 @@ function createWorkoutScreenModel(state: WorkoutState): WorkoutScreenModel {
         ? `${activeBreakPreset.label} - ${activeBreakPreset.display}`
         : null,
     breakPresets: BREAK_PRESETS,
+    completionStats: getCompletionStats(state),
   }
 }
 

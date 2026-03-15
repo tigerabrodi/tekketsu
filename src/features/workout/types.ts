@@ -42,6 +42,7 @@ type WorkoutScreenModel = {
   state: WorkoutState
   status: WorkoutStatus
   statusLabel: string
+  isCompletionVisible: boolean
   mainDisplay: string
   secondaryValue: string
   secondaryLabel: string
@@ -59,6 +60,7 @@ type WorkoutScreenModel = {
   breakCountdownDisplay: string | null
   breakSummaryLabel: string | null
   breakPresets: Array<BreakPreset>
+  completionStats: Array<CompletionStat>
 }
 
 type WorkoutScreenActions = {

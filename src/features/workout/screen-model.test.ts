@@ -109,6 +109,46 @@ describe('createWorkoutScreenModel', () => {
       breakSummaryLabel: 'MEDIUM - 0:45',
     })
   })
+
+  it('maps a completed timer workout into the completion card state', () => {
+    expect(
+      createWorkoutScreenModel(
+        createInitialWorkoutState({
+          isComplete: true,
+          completedSets: 12,
+          timerDurationSeconds: 20 * 60,
+          currentTimeSeconds: 0,
+        })
+      )
+    ).toMatchObject({
+      status: 'complete',
+      isCompletionVisible: true,
+      completionStats: [
+        { label: 'SETS COMPLETED', value: '12', tone: 'accent' },
+        { label: 'DURATION', value: '20:00', tone: 'default' },
+      ],
+    })
+  })
+
+  it('maps a completed sets workout into the completion card state', () => {
+    expect(
+      createWorkoutScreenModel(
+        createInitialWorkoutState({
+          mode: 'sets',
+          isComplete: true,
+          completedSets: 30,
+          totalActiveTimeSeconds: 9 * 60 + 30,
+        })
+      )
+    ).toMatchObject({
+      status: 'complete',
+      isCompletionVisible: true,
+      completionStats: [
+        { label: 'SETS COMPLETED', value: '30', tone: 'accent' },
+        { label: 'ACTIVE TIME', value: '09:30', tone: 'default' },
+      ],
+    })
+  })
 })
 
 describe('withConfigActions', () => {
