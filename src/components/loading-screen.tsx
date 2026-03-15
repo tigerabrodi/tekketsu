@@ -1,9 +1,10 @@
-import { motion } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 import './loading-screen.css'
 
 const BRUSH_EASE: [number, number, number, number] = [0.0, 0.95, 0.05, 1.0]
+const ENTER_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1]
 
-const STROKES = [
+const RAW_STROKES = [
   // 鉄 (tetsu) — LEFT RADICAL 釒
   { d: 'M 142,46 Q 130,68 108,94', w: 8, delay: 0.1, dur: 0.15 },
   { d: 'M 58,110 L 196,110', w: 8, delay: 0.2, dur: 0.18 },
@@ -27,14 +28,39 @@ const STROKES = [
   { d: 'M 450,282 L 624,282', w: 8, delay: 1.66, dur: 0.2 },
 ]
 
+const STROKE_TIME_SCALE = 0.5
+const STROKES = RAW_STROKES.map((stroke) => ({
+  ...stroke,
+  delay: stroke.delay * STROKE_TIME_SCALE,
+  dur: Math.max(0.08, stroke.dur * STROKE_TIME_SCALE),
+}))
+
 function LoadingScreen() {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <div className="loading-screen">
-      <div className="loading-container">
+      <motion.div
+        className="loading-container"
+        initial={
+          shouldReduceMotion
+            ? { opacity: 1 }
+            : { opacity: 0, scale: 0.985, y: 10 }
+        }
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={
+          shouldReduceMotion
+            ? { duration: 0 }
+            : { duration: 0.36, ease: ENTER_EASE }
+        }
+      >
         <motion.svg
           viewBox="0 0 680 340"
           xmlns="http://www.w3.org/2000/svg"
           className="loading-kanji"
+          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
         >
           {STROKES.map((stroke, i) => (
             <motion.path
@@ -46,12 +72,12 @@ function LoadingScreen() {
               animate={{ pathLength: 1, opacity: 1 }}
               transition={{
                 pathLength: {
-                  delay: stroke.delay,
-                  duration: stroke.dur,
-                  ease: BRUSH_EASE,
+                  delay: shouldReduceMotion ? 0 : stroke.delay,
+                  duration: shouldReduceMotion ? 0.01 : stroke.dur,
+                  ease: shouldReduceMotion ? 'linear' : BRUSH_EASE,
                 },
                 opacity: {
-                  delay: stroke.delay,
+                  delay: shouldReduceMotion ? 0 : stroke.delay,
                   duration: 0.01,
                 },
               }}
@@ -61,13 +87,17 @@ function LoadingScreen() {
 
         <motion.p
           className="loading-label"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.0, duration: 0.5, ease: 'easeOut' }}
+          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={
+            shouldReduceMotion
+              ? { duration: 0 }
+              : { delay: 0.82, duration: 0.22, ease: ENTER_EASE }
+          }
         >
           鉄血 · tekketsu · iron blood
         </motion.p>
-      </div>
+      </motion.div>
     </div>
   )
 }
