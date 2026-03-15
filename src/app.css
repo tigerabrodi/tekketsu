@@ -1,0 +1,54 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Colors — Tekketsu: manga-inspired, blood red accent on near-white */
+  --color-bg: #fafafa;
+  --color-surface: #ffffff;
+  --color-border: rgba(17, 17, 17, 0.1);
+  --color-border-light: rgba(17, 17, 17, 0.06);
+
+  --color-text-primary: #111111;
+  --color-text-secondary: rgba(17, 17, 17, 0.55);
+  --color-text-muted: rgba(17, 17, 17, 0.35);
+  --color-text-on-dark: #fafafa;
+
+  --color-accent: #8b1a1a;
+  --color-accent-hover: #721515;
+
+  --color-overlay: rgba(17, 17, 17, 0.5);
+  --color-subtle-bg: rgba(17, 17, 17, 0.05);
+  --color-subtle-bg-hover: rgba(17, 17, 17, 0.08);
+
+  /* Typography — Shippori Mincho (display), Oswald (body), IBM Plex Mono (labels) */
+  --font-display: 'Shippori Mincho', serif;
+  --font-body: 'Oswald', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --text-display: 96px;
+  --text-heading: 28px;
+  --text-body: 15px;
+  --text-small: 13px;
+  --text-caption: 10px;
+
+  /* Spacing */
+  --spacing-section: 48px;
+  --spacing-group: 24px;
+  --spacing-element: 12px;
+  --spacing-tight: 8px;
+  --spacing-micro: 4px;
+
+  /* Radii — sharp and brutal, minimal rounding */
+  --radius-xl: 0px;
+  --radius-lg: 0px;
+  --radius-md: 0px;
+  --radius-sm: 0px;
+  --radius-xs: 0px;
+  --radius-round: 999px;
+
+  /* Shadows */
+  --shadow-dialog:
+    0 16px 48px rgba(17, 17, 17, 0.12), 0 0 0 1px rgba(17, 17, 17, 0.06);
+  --shadow-dropdown:
+    0 8px 32px rgba(17, 17, 17, 0.08), 0 0 0 1px rgba(17, 17, 17, 0.06);
+  --shadow-card: 0 4px 20px rgba(17, 17, 17, 0.08);
+}
