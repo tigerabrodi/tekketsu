@@ -38,7 +38,7 @@ function LandingPage() {
   const { signIn } = useAuthActions()
 
   return (
-    <div className="bg-bg flex min-h-screen flex-col items-center px-7 pt-14">
+    <div className="bg-bg flex h-screen flex-col items-center px-7 pt-14 pb-10">
       {/* Header label */}
       <p className="text-text-muted text-caption font-mono font-medium tracking-[0.25em]">
         WORKOUT TRACKER
@@ -59,16 +59,16 @@ function LandingPage() {
       </div>
 
       {/* Hero image */}
-      <div className="mt-6 flex justify-center px-3">
+      <div className="mt-6 flex min-h-0 w-full flex-1 flex-col items-center justify-center px-3">
         <img
           src="/assets/guts-image-optimized.webp"
           alt="Warrior kneeling with sword"
-          className="border-text-primary h-[285px] w-[285px] border-2 object-cover"
+          className="border-text-primary min-h-0 w-[265px] flex-1 border-2 object-cover"
         />
       </div>
 
       {/* Tagline */}
-      <p className="font-body text-text-secondary mt-6 text-center text-[15px] leading-[24px] font-light tracking-wide">
+      <p className="font-body text-text-secondary mt-6 text-center text-[15px] leading-[24px] font-normal tracking-wide">
         One screen. Sets tracked. Rest timed. No distractions — just you and the
         iron.
       </p>
