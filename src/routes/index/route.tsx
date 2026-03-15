@@ -63,6 +63,9 @@ function LandingPage() {
         <img
           src="/assets/guts-image-optimized.webp"
           alt="Warrior kneeling with sword"
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
           className="border-text-primary min-h-0 w-[265px] flex-1 border-2 object-cover"
         />
       </div>
